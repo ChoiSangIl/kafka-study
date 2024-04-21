@@ -219,4 +219,5 @@ gradle-app.setting
 # .idea/jarRepositories.xml
 .idea/navEditor.xml
 
+/.idea/kotlinc.xml
 # End of https://www.toptal.com/developers/gitignore/api/gradle,intellij,windows,kotlin
