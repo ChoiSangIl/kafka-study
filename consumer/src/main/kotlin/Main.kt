@@ -11,18 +11,17 @@ fun main() {
     kafkaProps["group.id"] = "BART_GROUP1"
     kafkaProps["key.deserializer"] = "org.apache.kafka.common.serialization.StringDeserializer"
     kafkaProps["value.deserializer"] = "org.apache.kafka.common.serialization.StringDeserializer"
-    // kafkaProps["partition.assignment.strategy"] = "org.apache.kafka.clients.consumer.RangeAssignor" 리밸런스 전략
 
     val consumer: KafkaConsumer<String, String> = KafkaConsumer(kafkaProps)
 
-    consumer.subscribe(Collections.singleton("createdOrder"))
+    consumer.subscribe(Collections.singleton("test"))
 
     val timeout = Duration.ofMillis(100)
     while (true){
         val records :ConsumerRecords<String, String> = consumer.poll(timeout)
 
         for (record in records){
-            println("${record.topic()}, ${record.partition()}, ${record.offset()}, ${record.key()}, ${record.value()}")
+            println("topic : ${record.topic()}, partition : ${record.partition()}, offset: ${record.offset()}, key: ${record.key()}, record : ${record.value()}")
         }
     }
 }

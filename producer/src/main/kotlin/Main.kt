@@ -24,7 +24,7 @@ object KafkaProducerProvider{
 }
 
 object KafkaRecordHelper{
-    fun createOrder(): ProducerRecord<String, String> = ProducerRecord("createdOrder", "orders", "{\"orderId\":\"${Random.nextInt(1..100000)}\",\"createdAt\":\"${LocalDateTime.now()}\"}")
+    fun createOrder(): ProducerRecord<String, String> = ProducerRecord("test", (1..10000).random().toString(), "{\"orderId\":\"${Random.nextInt(1..100000)}\",\"createdAt\":\"${LocalDateTime.now()}\"}")
 }
 
 class DemoProducerCallback: Callback{
@@ -36,6 +36,7 @@ class DemoProducerCallback: Callback{
 
 fun main() {
     //동기적 전송
+    /*
     try {
         KafkaProducerProvider.producer.send(KafkaRecordHelper.createOrder()).get()
     } catch (e: Exception) {
@@ -49,5 +50,14 @@ fun main() {
         e.printStackTrace()
     }
 
-    Thread.sleep(2000)
+     */
+
+    while(true){
+        try {
+            KafkaProducerProvider.producer.send(KafkaRecordHelper.createOrder(), DemoProducerCallback())
+            Thread.sleep((100..1000).random().toLong())
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 }
